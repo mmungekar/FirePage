@@ -1,6 +1,5 @@
 package model.User;
 
-import model.Privilege.Privilege;
 
 /**
  * Created by Bill Xiong on 3/3/17.
@@ -9,14 +8,21 @@ import model.Privilege.Privilege;
 
 public class Resident extends User{
 
-    private Dorm dorm;
-    public Resident(String name, Dorm dorm) {
+    public Resident(String name) {
         super(name);
-        this.dorm = dorm;
     }
 
-    public void addPrivileges() {
-        //no PRIVILEGES :(
+    public boolean insert() {
+        return false;
     }
 
+    public boolean addSubordinate(User u) {
+        //residents have no subordinates
+        return false;
+    }
+
+    @Override
+    public boolean addToDormSet(Dorm dorm) {
+        return (this.getDorms().size() < 1) && super.addToDormSet(dorm);
+    }
 }

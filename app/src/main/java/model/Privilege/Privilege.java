@@ -8,7 +8,7 @@ package model.Privilege;
 
 public abstract class Privilege {
 
-    public enum Privileges { READ_CALENDAR, SWITCH, UPDATE_CALENDAR, ANSWER_PAGES, RESOLVE_PAGES }
+    public enum Privileges { READ_CALENDAR, SWITCH, UPDATE_CALENDAR, PAGE }
 
     public Privilege() {
 

@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "825323699355",
+    "firebase_url": "https://firepage-77157.firebaseio.com",
+    "project_id": "firepage-77157",
+    "storage_bucket": "firepage-77157.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:825323699355:android:e2a5c115c036ec64",
+        "android_client_info": {
+          "package_name": "com.example.billxiong24.firepageandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "825323699355-fthl6oc2kcghlp1hvu6e5ov516pilqof.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.billxiong24.firepageandroid",
+            "certificate_hash": "973411790c560d1f4bb89728f4ea05a23a7be524"
+          }
+        },
+        {
+          "client_id": "825323699355-76dfg37u83mdc3r2bli8hgbspn2m9vvs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3gavKLdtxXE1X4CKG5KyLBMR0uIgn_dI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "825323699355-5q4k0acim4ltn094ah3qu42tbt93hk99.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "Ritwik.FirePage"
+              }
+            },
+            {
+              "client_id": "825323699355-76dfg37u83mdc3r2bli8hgbspn2m9vvs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
