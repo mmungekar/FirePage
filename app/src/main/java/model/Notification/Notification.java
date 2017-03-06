@@ -15,6 +15,6 @@ public abstract class Notification {
     }
 
     /* Add notification to firebase, user can call this method */
-    public abstract void addNotification(Notification notification);
+    public abstract void addNotification();
 
 }

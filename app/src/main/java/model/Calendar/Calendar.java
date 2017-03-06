@@ -26,7 +26,7 @@ public interface Calendar {
     User getInfo(Date date);
 
     /**
-     *
+     * Switch users for on call
      * @param a first user
      * @param b second user
      * @param date date to switch

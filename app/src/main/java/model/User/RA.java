@@ -1,5 +1,7 @@
 package model.User;
 
+import com.google.firebase.database.Exclude;
+
 import model.Privilege.Privilege;
 import model.Privilege.PrivilegeFactory;
 
@@ -11,20 +13,21 @@ import model.Privilege.PrivilegeFactory;
 
 public class RA extends User {
 
-    private Dorm dorm;
 
-    public RA(String name, Dorm dorm) {
+    public RA(String name) {
         super(name);
-        this.dorm = dorm;
         this.addPrivilege(Privilege.Privileges.SWITCH, PrivilegeFactory.getPrivilege(Privilege.Privileges.SWITCH));
         this.addPrivilege(Privilege.Privileges.READ_CALENDAR, PrivilegeFactory.getPrivilege(Privilege.Privileges.READ_CALENDAR));
         this.addPrivilege(Privilege.Privileges.PAGE, PrivilegeFactory.getPrivilege(Privilege.Privileges.PAGE));
     }
 
+
+    @Exclude
     public boolean insert() {
         return false;
     }
 
+    @Exclude
     public boolean addSubordinate(User u) {
         return (u instanceof Resident) && this.addToSubSet(u);
     }

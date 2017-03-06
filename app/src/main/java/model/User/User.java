@@ -1,5 +1,7 @@
 package model.User;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,10 +18,12 @@ import model.Privilege.Privilege;
 public abstract class User {
 
     private final String PHONE_NUMBER = "";
-    private HashMap<Privilege.Privileges, Privilege> privileges;
+    private Map<Privilege.Privileges, Privilege> privileges;
     private Set<Dorm> dorms;
     private Set<User> subordinates;
     private String name;
+
+    public User() {}
 
     public User(String name) {
         this.name = name;
@@ -108,4 +112,15 @@ public abstract class User {
      * @return true if added successfully, else false
      */
     public abstract boolean addSubordinate(User u);
+
+    @Exclude
+    public Map<String, Object> toMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("dorms", this.dorms);
+        map.put("privileges", this.privileges);
+        map.put("name", this.name);
+        map.put("subs", this.subordinates);
+        return map;
+    }
+
 }
