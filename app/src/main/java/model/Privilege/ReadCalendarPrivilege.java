@@ -14,6 +14,9 @@ public class ReadCalendarPrivilege extends Privilege {
 
     private Calendar calendar;
 
+    public ReadCalendarPrivilege() {
+
+    }
     public ReadCalendarPrivilege(Calendar c) {
         super();
         this.calendar = c;
@@ -21,6 +24,10 @@ public class ReadCalendarPrivilege extends Privilege {
 
     public User getInfo(Date date) {
         return this.calendar.getInfo(date);
+    }
+
+    public Calendar getCalendar() {
+        return this.calendar;
     }
 
 

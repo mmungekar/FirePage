@@ -1,6 +1,9 @@
 package model.User;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -10,15 +13,36 @@ import java.util.Set;
 
 public class RC extends User {
 
-    private Set<Dorm> dorms;
+    public RC() {
+       super();
+    }
     public RC(String name) {
         super(name);
-        this.dorms = new HashSet<>();
     }
 
-    public RC(String name, Set<Dorm> dorms) {
-        super(name);
-        this.dorms = dorms;
+    /**
+     * A getter to return a map of privileges
+     * @return a map of privileges owned by a specific user
+     */
+    public Map<String, Object> getPrivileges() {
+        return Collections.unmodifiableMap(this.privileges);
+    }
+
+    public List<Object> getDorms() {
+        return Collections.unmodifiableList(this.dorms);
+    }
+
+    public List<Object> getSubordinates() {
+        return Collections.unmodifiableList(this.subordinates);
+    }
+
+
+    /**
+     * get user's name
+     * @return a string containing user's name
+     */
+    public String getName() {
+        return this.name;
     }
 
     public boolean insert() {

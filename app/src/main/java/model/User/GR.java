@@ -1,5 +1,8 @@
 package model.User;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -9,11 +12,36 @@ import java.util.Set;
 
 public class GR extends User {
 
-    private Dorm dorm;
 
-    public GR(String name, Dorm dorm) {
+    public GR() {
+       super();
+    }
+    public GR(String name) {
         super(name);
-        this.dorm = dorm;
+    }
+    /**
+     * A getter to return a map of privileges
+     * @return a map of privileges owned by a specific user
+     */
+    public Map<String, Object> getPrivileges() {
+        return Collections.unmodifiableMap(this.privileges);
+    }
+
+    public List<Object> getDorms() {
+        return Collections.unmodifiableList(this.dorms);
+    }
+
+    public List<Object> getSubordinates() {
+        return Collections.unmodifiableList(this.subordinates);
+    }
+
+
+    /**
+     * get user's name
+     * @return a string containing user's name
+     */
+    public String getName() {
+        return this.name;
     }
 
     public boolean insert() {

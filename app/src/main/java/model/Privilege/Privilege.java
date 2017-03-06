@@ -1,5 +1,7 @@
 package model.Privilege;
 
+import com.google.firebase.database.Exclude;
+
 /**
  * Created by Bill Xiong on 3/3/17.
  * Class for managing different privileges, such as viewing, switching, or changing

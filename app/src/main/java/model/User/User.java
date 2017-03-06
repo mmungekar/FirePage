@@ -2,13 +2,13 @@ package model.User;
 
 import com.google.firebase.database.Exclude;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import model.Privilege.Privilege;
+import model.User.Pojo.UserPojo;
 
 /**
  * Created by Bill Xiong on 3/3/17.
@@ -18,18 +18,24 @@ import model.Privilege.Privilege;
 public abstract class User {
 
     private final String PHONE_NUMBER = "";
-    private Map<Privilege.Privileges, Privilege> privileges;
-    private Set<Dorm> dorms;
-    private Set<User> subordinates;
-    private String name;
+    //maps Privilege.Privileges to Privilege obect- pojo must be String to Object
+    Map<String, Object> privileges;
+    List<Object> dorms;
+    List<Object> subordinates;
+    protected String name;
 
-    public User() {}
+    public User() {
+        privileges = new HashMap<>();
+        subordinates = new ArrayList<>();
+        dorms = new ArrayList<>();
+        this.name = null;
+    }
 
     public User(String name) {
         this.name = name;
         privileges = new HashMap<>();
-        subordinates = new HashSet<>();
-        dorms = new HashSet<>();
+        subordinates = new ArrayList<>();
+        dorms = new ArrayList<>();
     }
 
     /* users can call the pager with this method. Will call number and record call */
@@ -64,16 +70,16 @@ public abstract class User {
      * A getter to return a map of privileges
      * @return a map of privileges owned by a specific user
      */
-    public Map<Privilege.Privileges, Privilege> getPrivileges() {
+    public Map<String, Object> getPrivileges() {
         return Collections.unmodifiableMap(this.privileges);
     }
 
-    public Set<Dorm> getDorms() {
-        return Collections.unmodifiableSet(this.dorms);
+    public List<Object> getDorms() {
+        return Collections.unmodifiableList(this.dorms);
     }
 
-    public Set<User> getSubordinates() {
-        return Collections.unmodifiableSet(this.subordinates);
+    public List<Object> getSubordinates() {
+        return Collections.unmodifiableList(this.subordinates);
     }
 
 
@@ -88,16 +94,16 @@ public abstract class User {
     /**
      *  Allow to dynamically add privileges based on information given
      */
-    public void addPrivilege(Privilege.Privileges a, Privilege b) {
+    public void addPrivilege(String a, Object b) {
        this.privileges.put(a, b);
     }
 
     protected boolean addToSubSet(User u) {
-        return this.subordinates.add(u);
+        return (u != null) && this.subordinates.add(u);
     }
 
-    public boolean addToDormSet(Dorm dorm) {
-        return this.dorms.add(dorm);
+    public boolean addToDormSet(String dorm) {
+        return this.getDorm(dorm) && this.dorms.add(dorm);
     }
 
     /**
@@ -113,14 +119,22 @@ public abstract class User {
      */
     public abstract boolean addSubordinate(User u);
 
-    @Exclude
-    public Map<String, Object> toMap() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("dorms", this.dorms);
-        map.put("privileges", this.privileges);
-        map.put("name", this.name);
-        map.put("subs", this.subordinates);
-        return map;
+    public UserPojo toPojo() {
+        UserPojo pojo = new UserPojo(this.name);
+
+        return null;
     }
 
+    @Exclude
+    protected boolean getDorm(String str) {
+        Dorm d = null;
+        try {
+            d = Dorm.valueOf(str);
+        }
+        catch(IllegalArgumentException e) {
+            //TODO something better than this
+            e.printStackTrace();
+        }
+        return d != null;
+    }
 }
