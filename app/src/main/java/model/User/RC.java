@@ -16,15 +16,12 @@ public class RC extends User {
     public RC() {
        super();
     }
-    public RC(String name) {
-        super(name);
+    public RC(String name, String username, String udid, String password, String phone_number) {
+        super(name, username, udid, password, phone_number);
     }
 
     public boolean insert() {
         return false;
     }
 
-    public boolean addSubordinate(User u) {
-        return (u instanceof GR) && this.addToSubSet(u);
-    }
 }

@@ -16,16 +16,13 @@ public class GR extends User {
     public GR() {
        super();
     }
-    public GR(String name) {
-        super(name);
+    public GR(String name, String username, String udid, String password, String phone_number) {
+        super(name, username, udid, password, phone_number);
     }
 
     public boolean insert() {
         return false;
     }
 
-    public boolean addSubordinate(User u) {
-        return (u instanceof RA) && this.addToSubSet(u);
-    }
 
 }

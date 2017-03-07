@@ -23,8 +23,8 @@ public class RA extends User {
     public RA() {
         super();
     }
-    public RA(String name) {
-        super(name);
+    public RA(String name, String username, String udid, String password, String phone_number) {
+        super(name, username, udid, password, phone_number);
         this.addPrivilege(Privilege.Privileges.SWITCH);
         this.addPrivilege(Privilege.Privileges.READ_CALENDAR);
         this.addPrivilege(Privilege.Privileges.PAGE);
@@ -45,9 +45,5 @@ public class RA extends User {
         return false;
     }
 
-    @Exclude
-    public boolean addSubordinate(User u) {
-        return (u instanceof Resident) && this.addToSubSet(u);
-    }
 
 }

@@ -12,8 +12,8 @@ import java.util.Map;
 
 public class Resident extends User{
 
-    public Resident(String name) {
-        super(name);
+    public Resident(String name, String username, String udid, String password, String phone_number) {
+        super(name, username, udid, password, phone_number);
     }
 
     public boolean insert() {

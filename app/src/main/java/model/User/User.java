@@ -2,16 +2,11 @@ package model.User;
 
 import com.google.firebase.database.Exclude;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import model.Privilege.Privilege;
-import model.User.Pojo.UserPojo;
 
 /**
  * Created by Bill Xiong on 3/3/17.
@@ -23,19 +18,24 @@ public abstract class User {
     private final String PHONE_NUMBER = "";
     private Set<Privilege.Privileges> privileges;
     private Set<Dorm> dorms;
-    private Set<User> subordinates;
     private String name;
 
-    public User(String name) {
+    private String username;
+    private String udid;
+    private String password;
+    private String phone_number;
+    public User(String name, String username, String udid, String password, String phone_number) {
         this.name = name;
+        this.username = username;
+        this.udid = udid;
+        this.password = password;
+        this.phone_number = phone_number;
         privileges = new HashSet<>();
-        subordinates = new HashSet<>();
         dorms = new HashSet<>();
     }
     //maps Privilege.Privileges to Privilege obect- pojo must be String to Object
     public User() {
         privileges = new HashSet<>();
-        subordinates = new HashSet<>();
         dorms = new HashSet<>();
         this.name = null;
     }
@@ -45,6 +45,22 @@ public abstract class User {
         //TODO something with PHONE_NUMBER and stuff
     }
 
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getUdid() {
+        return udid;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
 
 
     /**
@@ -79,10 +95,6 @@ public abstract class User {
         return Collections.unmodifiableSet(this.dorms);
     }
 
-    public Set<User> getSubordinates() {
-        return Collections.unmodifiableSet(this.subordinates);
-    }
-
 
     /**
      * get user's name
@@ -97,9 +109,6 @@ public abstract class User {
      */
     public void addPrivilege(Privilege.Privileges a) {
         this.privileges.add(a);
-    }
-    protected boolean addToSubSet(User u) {
-        return (u != null) && this.subordinates.add(u);
     }
 
     public boolean addToDormSet(Dorm dorm) {
@@ -117,13 +126,6 @@ public abstract class User {
      * @param u user to add
      * @return true if added successfully, else false
      */
-    public abstract boolean addSubordinate(User u);
-
-    public UserPojo toPojo() {
-        UserPojo pojo = new UserPojo(this.name);
-
-        return null;
-    }
 
     @Exclude
     protected boolean getDorm(String str) {
