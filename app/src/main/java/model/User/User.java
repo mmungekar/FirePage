@@ -16,14 +16,14 @@ import model.Privilege.Privilege;
 public abstract class User {
 
     private final String PHONE_NUMBER = "";
-    private HashMap<Privilege.Privileges, Privilege> privileges;
+    private Set<Privilege.Privileges> privileges;
     private Set<Dorm> dorms;
     private Set<User> subordinates;
     private String name;
 
     public User(String name) {
         this.name = name;
-        privileges = new HashMap<>();
+        privileges = new HashSet<>();
         subordinates = new HashSet<>();
         dorms = new HashSet<>();
     }
@@ -60,8 +60,8 @@ public abstract class User {
      * A getter to return a map of privileges
      * @return a map of privileges owned by a specific user
      */
-    public Map<Privilege.Privileges, Privilege> getPrivileges() {
-        return Collections.unmodifiableMap(this.privileges);
+    public Set<Privilege.Privileges> getPrivileges() {
+        return Collections.unmodifiableSet(this.privileges);
     }
 
     public Set<Dorm> getDorms() {
@@ -84,8 +84,8 @@ public abstract class User {
     /**
      *  Allow to dynamically add privileges based on information given
      */
-    public void addPrivilege(Privilege.Privileges a, Privilege b) {
-       this.privileges.put(a, b);
+    public void addPrivilege(Privilege.Privileges a) {
+       this.privileges.add(a);
     }
 
     protected boolean addToSubSet(User u) {

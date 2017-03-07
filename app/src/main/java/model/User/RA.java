@@ -16,9 +16,9 @@ public class RA extends User {
     public RA(String name, Dorm dorm) {
         super(name);
         this.dorm = dorm;
-        this.addPrivilege(Privilege.Privileges.SWITCH, PrivilegeFactory.getPrivilege(Privilege.Privileges.SWITCH));
-        this.addPrivilege(Privilege.Privileges.READ_CALENDAR, PrivilegeFactory.getPrivilege(Privilege.Privileges.READ_CALENDAR));
-        this.addPrivilege(Privilege.Privileges.PAGE, PrivilegeFactory.getPrivilege(Privilege.Privileges.PAGE));
+        this.addPrivilege(Privilege.Privileges.SWITCH);
+        this.addPrivilege(Privilege.Privileges.READ_CALENDAR);
+        this.addPrivilege(Privilege.Privileges.PAGE);
     }
 
     public boolean insert() {
