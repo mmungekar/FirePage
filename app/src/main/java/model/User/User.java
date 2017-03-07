@@ -1,12 +1,17 @@
 package model.User;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import model.Privilege.Privilege;
+import model.User.Pojo.UserPojo;
 
 /**
  * Created by Bill Xiong on 3/3/17.
@@ -26,6 +31,13 @@ public abstract class User {
         privileges = new HashSet<>();
         subordinates = new HashSet<>();
         dorms = new HashSet<>();
+    }
+    //maps Privilege.Privileges to Privilege obect- pojo must be String to Object
+    public User() {
+        privileges = new HashSet<>();
+        subordinates = new HashSet<>();
+        dorms = new HashSet<>();
+        this.name = null;
     }
 
     /* users can call the pager with this method. Will call number and record call */
@@ -63,7 +75,6 @@ public abstract class User {
     public Set<Privilege.Privileges> getPrivileges() {
         return Collections.unmodifiableSet(this.privileges);
     }
-
     public Set<Dorm> getDorms() {
         return Collections.unmodifiableSet(this.dorms);
     }
@@ -85,11 +96,10 @@ public abstract class User {
      *  Allow to dynamically add privileges based on information given
      */
     public void addPrivilege(Privilege.Privileges a) {
-       this.privileges.add(a);
+        this.privileges.add(a);
     }
-
     protected boolean addToSubSet(User u) {
-        return this.subordinates.add(u);
+        return (u != null) && this.subordinates.add(u);
     }
 
     public boolean addToDormSet(Dorm dorm) {
@@ -108,4 +118,23 @@ public abstract class User {
      * @return true if added successfully, else false
      */
     public abstract boolean addSubordinate(User u);
+
+    public UserPojo toPojo() {
+        UserPojo pojo = new UserPojo(this.name);
+
+        return null;
+    }
+
+    @Exclude
+    protected boolean getDorm(String str) {
+        Dorm d = null;
+        try {
+            d = Dorm.valueOf(str);
+        }
+        catch(IllegalArgumentException e) {
+            //TODO something better than this
+            e.printStackTrace();
+        }
+        return d != null;
+    }
 }

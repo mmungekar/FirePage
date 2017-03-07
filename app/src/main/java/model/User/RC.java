@@ -1,6 +1,9 @@
 package model.User;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -10,15 +13,11 @@ import java.util.Set;
 
 public class RC extends User {
 
-    private Set<Dorm> dorms;
+    public RC() {
+       super();
+    }
     public RC(String name) {
         super(name);
-        this.dorms = new HashSet<>();
-    }
-
-    public RC(String name, Set<Dorm> dorms) {
-        super(name);
-        this.dorms = dorms;
     }
 
     public boolean insert() {

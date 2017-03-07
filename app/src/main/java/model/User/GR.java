@@ -1,5 +1,8 @@
 package model.User;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -9,11 +12,12 @@ import java.util.Set;
 
 public class GR extends User {
 
-    private Dorm dorm;
 
-    public GR(String name, Dorm dorm) {
+    public GR() {
+       super();
+    }
+    public GR(String name) {
         super(name);
-        this.dorm = dorm;
     }
 
     public boolean insert() {

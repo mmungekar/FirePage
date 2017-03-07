@@ -1,7 +1,15 @@
 package model.User;
 
+import com.google.firebase.database.Exclude;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
+import model.Calendar.RACalendar;
 import model.Privilege.Privilege;
 import model.Privilege.PrivilegeFactory;
+import model.Privilege.SwitchPrivilege;
 
 
 /**
@@ -11,20 +19,33 @@ import model.Privilege.PrivilegeFactory;
 
 public class RA extends User {
 
-    private Dorm dorm;
 
-    public RA(String name, Dorm dorm) {
+    public RA() {
+        super();
+    }
+    public RA(String name) {
         super(name);
-        this.dorm = dorm;
         this.addPrivilege(Privilege.Privileges.SWITCH);
         this.addPrivilege(Privilege.Privileges.READ_CALENDAR);
         this.addPrivilege(Privilege.Privileges.PAGE);
     }
 
+    /**
+     * A getter to return a map of privileges
+     * @return a map of privileges owned by a specific user
+     */
+
+
+    /**
+     * get user's name
+     * @return a string containing user's name
+     */
+    @Exclude
     public boolean insert() {
         return false;
     }
 
+    @Exclude
     public boolean addSubordinate(User u) {
         return (u instanceof Resident) && this.addToSubSet(u);
     }

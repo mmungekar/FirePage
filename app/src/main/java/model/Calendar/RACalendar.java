@@ -1,5 +1,7 @@
 package model.Calendar;
 
+import android.support.annotation.Keep;
+
 import java.util.Date;
 
 import model.User.User;
@@ -9,8 +11,13 @@ import model.User.User;
  * ra calendar
  */
 
-public class RACalendar implements Calendar{
+@Keep
+public class RACalendar implements Calendar {
 
+    private String holder;
+    public RACalendar() {
+        this.holder = "";
+    }
     public void addUser(User u) {
 
     }
@@ -21,5 +28,8 @@ public class RACalendar implements Calendar{
 
     public void switchUser(User a, User b, Date date) {
 
+    }
+    public String getHolder() {
+        return this.holder;
     }
 }
