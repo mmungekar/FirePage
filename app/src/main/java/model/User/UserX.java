@@ -2,15 +2,15 @@ package model.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
-import model.Privilege.Privilege;
+import model.Converted;
+import model.Convertable;
 
 /**
  * Created by Bill Xiong on 3/6/17.
+ * Object to add to database
  */
 
-public class UserX {
+public class UserX implements Converted {
 
     List<String> privileges, dorms;
     String name, username, udid, password, phone_number;
@@ -46,6 +46,10 @@ public class UserX {
 
     public String getPhone_number() {
         return phone_number;
+    }
+
+    public Convertable convertBack() {
+        return null;
     }
 
 }
