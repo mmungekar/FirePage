@@ -1,10 +1,15 @@
 package model.User;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.GenericTypeIndicator;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Converted;
 import model.Convertable;
+import model.Database.DataBase;
+import model.Privilege.Privilege;
 
 /**
  * Created by Bill Xiong on 3/6/17.
@@ -12,6 +17,7 @@ import model.Convertable;
  */
 
 public class UserX implements Converted {
+
 
     List<String> privileges, dorms;
     String name, username, udid, password, phone_number;
@@ -52,16 +58,27 @@ public class UserX implements Converted {
     public Convertable convertBack() {
         return null;
     }
-    public Convertable convertBack(Class className) {
-        Convertable c = null;
+
+    public User convertBack(Class<?> className, DataSnapshot snapshot) {
+        User user = null;
+
         try {
-            c = (Convertable) className.getConstructor(String.class, String.class, String.class, String.class, String.class)
-                    .newInstance(name, username, udid, password, phone_number);
+            user = (User) className.getConstructor(String.class, String.class, String.class, String.class, String.class)
+                    .newInstance(this.name, this.username, this.udid, this.password, this.phone_number);
+            for(String d : dorms) {
+                //TODO error handling
+                user.addToDormSet(Dorm.valueOf(d));
+            }
+
+            for(String p : privileges) {
+                //TODO error handling for valueOf
+                user.addPrivilege(Privilege.Privileges.valueOf(p));
+            }
 
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
             e.printStackTrace();
         }
-        return c;
+        return user;
     }
 
 }

@@ -11,6 +11,7 @@ import java.util.TreeSet;
 import model.CRUD;
 import model.Convertable;
 import model.Converted;
+import model.Database.DataBase;
 
 /**
  * Created by Bill Xiong on 3/7/17.
@@ -59,6 +60,8 @@ public class Dorm implements CRUD, Convertable {
     }
 
     public Converted convert() {
+        DataBase.getInstance();
+
         return null;
     }
 }

@@ -17,9 +17,7 @@ public class DataBase {
     private static FirebaseDatabase root = FirebaseDatabase.getInstance();
     private static DataBase database = null;
 
-    private DataBase() {
-
-    }
+    private DataBase() {}
 
     public static DataBase getInstance() {
         if(database == null)  {
@@ -29,16 +27,20 @@ public class DataBase {
         return database;
     }
 
+    public static FirebaseDatabase getRoot() {
+        return DataBase.root;
+    }
+
     public static Task insert(String key, Converted convertedObject) {
-        return root.getReference(key).setValue(convertedObject);
+        return DataBase.root.getReference(key).setValue(convertedObject);
     }
 
     public static Task update(String key, Map<String, Object> map) {
-        return root.getReference(key).updateChildren(map);
+        return DataBase.root.getReference(key).updateChildren(map);
     }
 
-    public static Converted read(Class className, DataSnapshot snapshot) {
-        return (Converted) snapshot.getValue(className);
+    public static Object read(Class className, DataSnapshot snapshot) {
+        return snapshot.getValue(className);
     }
 
     //TODO implement

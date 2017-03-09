@@ -14,13 +14,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Converted;
 import model.User.Dorm;
-import model.User.GR;
 import model.User.RA;
 import model.User.Resident;
 import model.User.User;
-import model.User.UserConverter;
 import model.User.UserX;
 
 /**
@@ -45,12 +42,17 @@ public class ContactActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                for(DataSnapshot d : dataSnapshot.getChildren()) {
+                   System.out.println("counting child" + d.getChildrenCount());
                    UserX userx = d.getValue(UserX.class);
                    System.out.println(userx.getName());
-                   System.out.println(userx.getDorms());
+                   System.out.println("these are dorms" + userx.getDorms());
+                   System.out.println("these are priuv" + userx.getPrivileges());
                    System.out.println(userx.getDorms() == null);
-                   RA converted = (RA) userx.convertBack(RA.class);
+                   //TODO avoid casting this
+                   User converted = userx.convertBack(RA.class, dataSnapshot);
                    System.out.println("PRAY THIS WORKSSS" + converted.getName());
+                   System.out.println("PRAY THIS WORKSSS" + converted.getPhone_number());
+                   System.out.println("PRAY THIS WORKSSS" + converted.getUsername());
                }
             }
 
@@ -58,6 +60,7 @@ public class ContactActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
         });
         b = (Button) findViewById(R.id.button1);
         b.setOnClickListener(new View.OnClickListener() {

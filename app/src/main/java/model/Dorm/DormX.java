@@ -1,5 +1,7 @@
 package model.Dorm;
 
+import com.google.firebase.database.DataSnapshot;
+
 import model.Convertable;
 import model.Converted;
 
@@ -10,7 +12,7 @@ import model.Converted;
 
 public class DormX implements Converted {
 
-    public Convertable convertBack() {
+    public Convertable convertBack(Class<?> className, DataSnapshot snapshot) {
         return null;
     }
 }

@@ -1,5 +1,9 @@
 package model.User;
 
+import android.provider.ContactsContract;
+
+import com.google.firebase.database.DataSnapshot;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -122,11 +126,6 @@ public abstract class User implements CRUD, Convertable {
         return false;
     }
 
-
-    /**
-     * A getter to return a map of privileges
-     * @return a map of privileges owned by a specific user
-     */
     public Set<Privilege.Privileges> getPrivileges() {
         return Collections.unmodifiableSet(this.privileges);
     }
@@ -190,6 +189,22 @@ public abstract class User implements CRUD, Convertable {
             userx.dorms.add(d.toString());
         }
         return userx;
+    }
+
+    /**
+     * Check if a username exists within a DataSnapshot
+     * @param username username to be checked
+     * @param snapshot snapshot to iterate through
+     * @return true if exists, else false
+     */
+    public boolean checkUsernameExists(String username, DataSnapshot snapshot) {
+
+        for(DataSnapshot d : snapshot.getChildren()) {
+            if(d.child(username).exists()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public abstract boolean insert();
