@@ -1,5 +1,6 @@
 package model.User;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Converted;
@@ -50,6 +51,17 @@ public class UserX implements Converted {
 
     public Convertable convertBack() {
         return null;
+    }
+    public Convertable convertBack(Class className) {
+        Convertable c = null;
+        try {
+            c = (Convertable) className.getConstructor(String.class, String.class, String.class, String.class, String.class)
+                    .newInstance(name, username, udid, password, phone_number);
+
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return c;
     }
 
 }

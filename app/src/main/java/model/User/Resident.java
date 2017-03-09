@@ -12,15 +12,16 @@ import java.util.Map;
 
 public class Resident extends User{
 
+    public Resident() {
+        super();
+    }
+
     public Resident(String name, String username, String udid, String password, String phone_number) {
         super(name, username, udid, password, phone_number);
     }
 
     public boolean insert() {
-        return false;
-    }
-    public boolean addSubordinate(User u) {
-        //residents have no subordinates
+        this.addToDatabase();
         return false;
     }
 

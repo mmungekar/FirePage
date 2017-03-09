@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Converted;
 import model.User.Dorm;
 import model.User.GR;
 import model.User.RA;
@@ -45,11 +46,11 @@ public class ContactActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                for(DataSnapshot d : dataSnapshot.getChildren()) {
                    UserX userx = d.getValue(UserX.class);
-
-
                    System.out.println(userx.getName());
                    System.out.println(userx.getDorms());
                    System.out.println(userx.getDorms() == null);
+                   RA converted = (RA) userx.convertBack(RA.class);
+                   System.out.println("PRAY THIS WORKSSS" + converted.getName());
                }
             }
 
@@ -62,13 +63,17 @@ public class ContactActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user = new RA("bil", "billx","1234", "password","67676767");
+                User user = new RA("bil", "billxion","1234", "password","67676767");
                 user.addToDormSet(Dorm.BROWN);
                 user.addToDormSet(Dorm.BELLTOWER);
-                UserX x = UserConverter.convertToUserX(user);
-                DatabaseReference ref = childRef.child(x.getUsername());
+                user.addToDormSet(Dorm.BASSET);
+                user.insert();
+                User res = new Resident("ritwik head", "ritler", "5436435", "pass", "8475687");
+                System.out.println(res.getClass().getSimpleName());
+                res.addToDormSet(Dorm.RANDOLPH);
+                res.insert();
+
                 //DatabaseReference d = childRef.push();
-                ref.setValue(x);
             }
         });
 

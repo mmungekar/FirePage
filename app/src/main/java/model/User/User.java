@@ -1,7 +1,5 @@
 package model.User;
 
-import com.google.firebase.database.Exclude;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -9,17 +7,20 @@ import java.util.Set;
 import model.Convertable;
 import model.Converted;
 import model.CRUD;
+import model.Database.DataBase;
 import model.Privilege.Privilege;
 
 /**
  * Created by Bill Xiong on 3/3/17.
  * Abstract class for all users- residents, RAs, GR, RC, admin, etc.
+ * follows builder pattern
  */
 
 public abstract class User implements CRUD, Convertable {
 
     private Set<Privilege.Privileges> privileges;
     private Set<Dorm> dorms;
+    private String className;
 
     private String name;
     private String username;
@@ -36,6 +37,7 @@ public abstract class User implements CRUD, Convertable {
         this.phone_number = phone_number;
         privileges = new HashSet<>();
         dorms = new HashSet<>();
+        this.className = this.getClass().getSimpleName();
     }
     //maps Privilege.Privileges to Privilege obect- pojo must be String to Object
     public User() {
@@ -137,13 +139,21 @@ public abstract class User implements CRUD, Convertable {
     /**
      *  Allow to dynamically add privileges based on information given
      */
-    public void addPrivilege(Privilege.Privileges a) {
-        this.privileges.add(a);
+    public boolean addPrivilege(Privilege.Privileges a) {
+        return this.privileges.add(a);
+    }
+
+    public boolean removePrivilege(Privilege.Privileges a) {
+        return this.privileges.remove(a);
     }
 
 
     public boolean addToDormSet(Dorm dorm) {
         return this.dorms.add(dorm);
+    }
+
+    public boolean removeFromDormSet(Dorm dorm) {
+        return this.dorms.remove(dorm);
     }
 
 
@@ -183,4 +193,9 @@ public abstract class User implements CRUD, Convertable {
     }
 
     public abstract boolean insert();
+
+    protected void addToDatabase() {
+        DataBase.getInstance();
+        DataBase.insert(this.className + "/" + this.username, this.convert());
+    }
 }
