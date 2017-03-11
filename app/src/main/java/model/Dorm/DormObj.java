@@ -2,6 +2,8 @@ package model.Dorm;
 
 import android.app.Notification;
 
+import com.google.firebase.database.DataSnapshot;
+
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -12,20 +14,20 @@ import model.CRUD;
 import model.Convertable;
 import model.Converted;
 import model.Database.DataBase;
-
+import model.User.Dorm;
 /**
  * Created by Bill Xiong on 3/7/17.
  * Manages operations of the dorm
  */
 
-public class Dorm implements CRUD, Convertable {
+public class DormObj implements CRUD, Convertable {
 
 
-    private Dorm name;
+    private model.User.Dorm name;
     private Set<Notification> notifications;
     private Calendar calendar;
 
-    public Dorm(Dorm dorm, Calendar c) {
+    public DormObj(model.User.Dorm dorm, Calendar c) {
         this.name = dorm;
         this.calendar = c;
         this.notifications = new TreeSet<>();
@@ -51,7 +53,7 @@ public class Dorm implements CRUD, Convertable {
        return false;
     }
 
-    public Object read(String key) {
+    public Object read(Class<?> name, DataSnapshot snapshot) {
         return null;
     }
 
