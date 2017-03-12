@@ -10,7 +10,7 @@ import com.google.firebase.database.Exclude;
 
 public abstract class Privilege {
 
-    public enum Privileges { READ_CALENDAR, SWITCH, UPDATE_CALENDAR, PAGE }
+    public enum Privileges { READ_CALENDAR, SWITCH, UPDATE_CALENDAR, PAGE, NOTIFY }
 
     public Privilege() {
 

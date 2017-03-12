@@ -1,6 +1,7 @@
 package model.Notification;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,12 +16,8 @@ import model.User.UserX;
 public class PublicNotification extends Notification{
 
 
-    public PublicNotification(String text, UserX sender) {
-        super(text, sender);
+    public PublicNotification(String text, UserX sender, Date date) {
+        super(text, sender, date);
     }
 
-
-    public void addNotification() {
-
-    }
 }

@@ -1,12 +1,11 @@
 package model.User;
 
-import android.provider.ContactsContract;
-
 import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import model.Convertable;
 import model.Converted;
@@ -73,6 +72,10 @@ public abstract class User implements CRUD, Convertable {
 
     public String getPhone_number() {
         return phone_number;
+    }
+
+    public String getClassName() {
+        return this.className;
     }
 
     /**
@@ -157,36 +160,68 @@ public abstract class User implements CRUD, Convertable {
 
 
     public boolean update(String key, Object value) {
+        DataBase.getInstance();
+        DataBase.updateValue(this.getUserKey(key), value);
+
         return false;
+    }
+
+    public void updateAllValues(Map<String, Object> map) {
+        DataBase.getInstance();
+        DataBase.update(map);
     }
 
     public boolean delete(String key) {
         return false;
     }
 
-    public  Object read(String key) {
-        return null;
+    public User read(Class<?> name, DataSnapshot snapshot) {
+        UserX userx = (UserX) DataBase.read(UserX.class, snapshot);
+        return userx.convertBack(name, snapshot);
+    }
+
+    /**
+     * retrieves from database a specific user with a specific username
+     * @param name class name to use
+     * @param snapshot data snapshot of particular table
+     * @param username username of user to retrieve from database
+     * @return User object containing the information
+     */
+    public User read(Class<?> name, DataSnapshot snapshot, String username) {
+        UserX userx = (UserX) DataBase.read(UserX.class, snapshot.child(username));
+        return userx.convertBack(name, snapshot.child(username));
+    }
+
+    public Object readField(Class<?> name, String field, DataSnapshot snapshot) {
+//        Field f = null;
+//        Class name = this.getClass();
+//        try {
+//            f = name.getDeclaredField(field);
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
+//        }
+
+        return DataBase.read(name, snapshot.child(this.username).child(field));
     }
 
 
-    public Converted convert() {
+    public UserInfo convert() {
         UserX userx = new UserX();
-        userx.name = this.name;
-        userx.password = this.password;
-        userx.phone_number = this.phone_number;
-        userx.udid = this.udid;
-        userx.username = this.username;
-        userx.dorms = new ArrayList<>();
-        userx.privileges = new ArrayList<>();
+        userx.setName(this.name);
+        userx.setPassword (this.password);
+        userx.setPhone_number (this.phone_number);
+        userx.setUdid(this.udid);
+        userx.setUsername(this.username);
+
         Set<Privilege.Privileges> priv = this.privileges;
         Set<Dorm> dorms = this.dorms;
 
         for(Privilege.Privileges p : priv) {
-            userx.privileges.add(p.toString());
+            userx.getPrivileges().add(p.toString());
         }
 
         for(Dorm d : dorms) {
-            userx.dorms.add(d.toString());
+            userx.getDorms().add(d.toString());
         }
         return userx;
     }
@@ -211,6 +246,10 @@ public abstract class User implements CRUD, Convertable {
 
     protected void addToDatabase() {
         DataBase.getInstance();
-        DataBase.insert(this.className + "/" + this.username, this.convert());
+        DataBase.insert(this.getUserKey(""), this.convert());
+    }
+
+    private String getUserKey(String key) {
+        return this.className + "/" + this.username + "/" + key;
     }
 }

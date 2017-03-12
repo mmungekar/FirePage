@@ -30,8 +30,8 @@ public class UpdateCalendarPrivilege extends Privilege {
         this.calendar.switchUser(a, b, date);
     }
 
-    public void addUser(User a) {
-        this.calendar.addUser(a);
+    public void addUser(Date d, User a) {
+        this.calendar.addUser(d, a);
     }
 
     public Calendar getCalendar() {

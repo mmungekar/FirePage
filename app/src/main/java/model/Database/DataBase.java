@@ -14,7 +14,7 @@ import model.Converted;
  */
 
 public class DataBase {
-    private static FirebaseDatabase root = FirebaseDatabase.getInstance();
+    private static final FirebaseDatabase root = FirebaseDatabase.getInstance();
     private static DataBase database = null;
 
     private DataBase() {}
@@ -35,8 +35,11 @@ public class DataBase {
         return DataBase.root.getReference(key).setValue(convertedObject);
     }
 
-    public static Task update(String key, Map<String, Object> map) {
-        return DataBase.root.getReference(key).updateChildren(map);
+    public static Task updateValue(String key, Object obj) {
+        return DataBase.root.getReference(key).setValue(obj);
+    }
+    public static Task update(Map<String, Object> map) {
+        return DataBase.root.getReference().updateChildren(map);
     }
 
     public static Object read(Class className, DataSnapshot snapshot) {

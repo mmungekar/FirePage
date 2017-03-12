@@ -1,14 +1,12 @@
 package model.User;
 
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.GenericTypeIndicator;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Converted;
 import model.Convertable;
-import model.Database.DataBase;
 import model.Privilege.Privilege;
 
 /**
@@ -16,11 +14,17 @@ import model.Privilege.Privilege;
  * Object to add to database
  */
 
-public class UserX implements Converted {
+public class UserX implements Converted, UserInfo {
 
 
-    List<String> privileges, dorms;
-    String name, username, udid, password, phone_number;
+    private List<String> privileges, dorms;
+    private String name;
+
+
+    private String username;
+    private String udid;
+    private String password;
+    private String phone_number;
 
     public UserX() {
         this.privileges = new ArrayList<>();
@@ -55,8 +59,24 @@ public class UserX implements Converted {
         return phone_number;
     }
 
-    public Convertable convertBack() {
-        return null;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUdid(String udid) {
+        this.udid = udid;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
     }
 
     public User convertBack(Class<?> className, DataSnapshot snapshot) {

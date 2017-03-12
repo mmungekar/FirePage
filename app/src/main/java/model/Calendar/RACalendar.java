@@ -9,6 +9,7 @@ import java.util.Map;
 
 import model.Convertable;
 import model.Converted;
+import model.User.RA;
 import model.User.User;
 
 /**
@@ -29,8 +30,8 @@ public class RACalendar implements Calendar, Convertable {
         this.dates = new HashMap<>();
     }
 
-    public void addUser(User u) {
-
+    public boolean addUser(Date d, User u) {
+        return (u instanceof RA) && this.dates.put(d, u) == null;
     }
 
     public Map<Date, User> getDates() {

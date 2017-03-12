@@ -1,28 +1,28 @@
 package model.User;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import model.Convertable;
+import model.Converted;
 import model.Privilege.Privilege;
 
 /**
  * Created by Bill Xiong on 3/6/17.
  * Filters uncessary information when passing to pojo object
+ * Provides ability to restore object to previous state without exposing
+ * unecessary internal state
+ *
  */
 
-public interface UserInfo {
+public interface UserInfo extends Converted {
 
     /**
      * getter for dorms a user is related to
-     * @return set of dorm enums
+     * @return list of dorm enums converted to strings
      */
-    Set<Dorm> getDorms();
-
-    /**
-     * getter for subordinates, if any
-     * @return set of user objects
-     */
-    Set<User> getSubordinates();
+    List<String> getDorms();
 
     /**
      * getter for user name
@@ -32,7 +32,27 @@ public interface UserInfo {
 
     /**
      * getter for privileges, if any
-     * @return map of enum privileges to privilege object
+     * @return String List of privileges
      */
-    Map<Privilege.Privileges, Privilege> getPrivileges();
+    List<String> getPrivileges();
+
+    /**
+     * getter for username
+     * @return username
+     */
+    String getUsername();
+
+    /**
+     * getter for phone number
+     * @return phone number
+     */
+    String getPhone_number();
+
+    /**
+     * getter for udid
+     * @return udid
+     */
+    String getUdid();
+
+
 }
