@@ -1,0 +1,6 @@
+<root>
+  <item
+      name='java.lang.Class java.lang.reflect.Constructor&lt;T&gt; getConstructor(java.lang.Class&lt;?&gt;...)'>
+    <annotation name='android.support.annotation.Nullable' />
+  </item>
+</root>

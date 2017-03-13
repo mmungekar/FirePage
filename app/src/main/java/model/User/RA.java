@@ -2,14 +2,7 @@ package model.User;
 
 import com.google.firebase.database.Exclude;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import model.Calendar.RACalendar;
 import model.Privilege.Privilege;
-import model.Privilege.PrivilegeFactory;
-import model.Privilege.SwitchPrivilege;
 
 
 /**
@@ -31,19 +24,12 @@ public class RA extends User {
     }
 
     /**
-     * A getter to return a map of privileges
-     * @return a map of privileges owned by a specific user
-     */
-
-
-    /**
      * get user's name
      * @return a string containing user's name
      */
     @Exclude
     public boolean insert() {
+        this.addToDatabase();
         return false;
     }
-
-
 }

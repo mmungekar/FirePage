@@ -40,7 +40,6 @@ import java.util.List;
 import model.User.Dorm;
 import model.User.RA;
 import model.User.User;
-import model.User.UserConverter;
 import model.User.UserX;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -158,7 +157,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 User user = new RA("bil", "billx","1234", "password","67676767");
                 user.addToDormSet(Dorm.BROWN);
                 user.addToDormSet(Dorm.BELLTOWER);
-                UserX x = UserConverter.convertToUserX(user);
+                UserX x = (UserX) user.convert();
                 DatabaseReference ref = childRef.child(x.getUsername());
                 //DatabaseReference d = childRef.push();
                 ref.setValue(x);

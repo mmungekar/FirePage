@@ -14,9 +14,11 @@ public interface Calendar {
 
     /**
      *  Add user to calendar, for example add user to be on call
+     *  @param d date to add user on
      *  @param u user to add
+     *  @return true if present, else false
      */
-    void addUser(User u);
+    boolean addUser(Date d, User u);
 
     /**
      *  Get user on a specific day, for example get the user on call

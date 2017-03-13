@@ -1,19 +1,30 @@
 package model.User;
 
+import com.google.firebase.database.DataSnapshot;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Converted;
 import model.Convertable;
+import model.Privilege.Privilege;
 
 /**
  * Created by Bill Xiong on 3/6/17.
  * Object to add to database
  */
 
-public class UserX implements Converted {
+public class UserX implements Converted, UserInfo {
 
-    List<String> privileges, dorms;
-    String name, username, udid, password, phone_number;
+
+    private List<String> privileges, dorms;
+    private String name;
+
+
+    private String username;
+    private String udid;
+    private String password;
+    private String phone_number;
 
     public UserX() {
         this.privileges = new ArrayList<>();
@@ -48,8 +59,46 @@ public class UserX implements Converted {
         return phone_number;
     }
 
-    public Convertable convertBack() {
-        return null;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUdid(String udid) {
+        this.udid = udid;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    public User convertBack(Class<?> className, DataSnapshot snapshot) {
+        User user = null;
+
+        try {
+            user = (User) className.getConstructor(String.class, String.class, String.class, String.class, String.class)
+                    .newInstance(this.name, this.username, this.udid, this.password, this.phone_number);
+            for(String d : dorms) {
+                //TODO error handling
+                user.addToDormSet(Dorm.valueOf(d));
+            }
+
+            for(String p : privileges) {
+                //TODO error handling for valueOf
+                user.addPrivilege(Privilege.Privileges.valueOf(p));
+            }
+
+        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
 }

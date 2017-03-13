@@ -1,25 +1,29 @@
 package model.User;
 
-import com.google.firebase.database.Exclude;
+import com.google.firebase.database.DataSnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import model.Convertable;
 import model.Converted;
 import model.CRUD;
+import model.Database.DataBase;
 import model.Privilege.Privilege;
 
 /**
  * Created by Bill Xiong on 3/3/17.
  * Abstract class for all users- residents, RAs, GR, RC, admin, etc.
+ * follows builder pattern
  */
 
 public abstract class User implements CRUD, Convertable {
 
     private Set<Privilege.Privileges> privileges;
     private Set<Dorm> dorms;
+    private String className;
 
     private String name;
     private String username;
@@ -36,6 +40,7 @@ public abstract class User implements CRUD, Convertable {
         this.phone_number = phone_number;
         privileges = new HashSet<>();
         dorms = new HashSet<>();
+        this.className = this.getClass().getSimpleName();
     }
     //maps Privilege.Privileges to Privilege obect- pojo must be String to Object
     public User() {
@@ -67,6 +72,10 @@ public abstract class User implements CRUD, Convertable {
 
     public String getPhone_number() {
         return phone_number;
+    }
+
+    public String getClassName() {
+        return this.className;
     }
 
     /**
@@ -120,11 +129,6 @@ public abstract class User implements CRUD, Convertable {
         return false;
     }
 
-
-    /**
-     * A getter to return a map of privileges
-     * @return a map of privileges owned by a specific user
-     */
     public Set<Privilege.Privileges> getPrivileges() {
         return Collections.unmodifiableSet(this.privileges);
     }
@@ -137,8 +141,12 @@ public abstract class User implements CRUD, Convertable {
     /**
      *  Allow to dynamically add privileges based on information given
      */
-    public void addPrivilege(Privilege.Privileges a) {
-        this.privileges.add(a);
+    public boolean addPrivilege(Privilege.Privileges a) {
+        return this.privileges.add(a);
+    }
+
+    public boolean removePrivilege(Privilege.Privileges a) {
+        return this.privileges.remove(a);
     }
 
 
@@ -146,41 +154,102 @@ public abstract class User implements CRUD, Convertable {
         return this.dorms.add(dorm);
     }
 
+    public boolean removeFromDormSet(Dorm dorm) {
+        return this.dorms.remove(dorm);
+    }
+
 
     public boolean update(String key, Object value) {
+        DataBase.getInstance();
+        DataBase.updateValue(this.getUserKey(key), value);
+
         return false;
+    }
+
+    public void updateAllValues(Map<String, Object> map) {
+        DataBase.getInstance();
+        DataBase.update(map);
     }
 
     public boolean delete(String key) {
         return false;
     }
 
-    public  Object read(String key) {
-        return null;
+    public User read(Class<?> name, DataSnapshot snapshot) {
+        UserX userx = (UserX) DataBase.read(UserX.class, snapshot);
+        return userx.convertBack(name, snapshot);
+    }
+
+    /**
+     * retrieves from database a specific user with a specific username
+     * @param name class name to use
+     * @param snapshot data snapshot of particular table
+     * @param username username of user to retrieve from database
+     * @return User object containing the information
+     */
+    public User read(Class<?> name, DataSnapshot snapshot, String username) {
+        UserX userx = (UserX) DataBase.read(UserX.class, snapshot.child(username));
+        return userx.convertBack(name, snapshot.child(username));
+    }
+
+    public Object readField(Class<?> name, String field, DataSnapshot snapshot) {
+//        Field f = null;
+//        Class name = this.getClass();
+//        try {
+//            f = name.getDeclaredField(field);
+//        } catch (NoSuchFieldException e) {
+//            e.printStackTrace();
+//        }
+
+        return DataBase.read(name, snapshot.child(this.username).child(field));
     }
 
 
-    public Converted convert() {
+    public UserInfo convert() {
         UserX userx = new UserX();
-        userx.name = this.name;
-        userx.password = this.password;
-        userx.phone_number = this.phone_number;
-        userx.udid = this.udid;
-        userx.username = this.username;
-        userx.dorms = new ArrayList<>();
-        userx.privileges = new ArrayList<>();
+        userx.setName(this.name);
+        userx.setPassword (this.password);
+        userx.setPhone_number (this.phone_number);
+        userx.setUdid(this.udid);
+        userx.setUsername(this.username);
+
         Set<Privilege.Privileges> priv = this.privileges;
         Set<Dorm> dorms = this.dorms;
 
         for(Privilege.Privileges p : priv) {
-            userx.privileges.add(p.toString());
+            userx.getPrivileges().add(p.toString());
         }
 
         for(Dorm d : dorms) {
-            userx.dorms.add(d.toString());
+            userx.getDorms().add(d.toString());
         }
         return userx;
     }
 
+    /**
+     * Check if a username exists within a DataSnapshot
+     * @param username username to be checked
+     * @param snapshot snapshot to iterate through
+     * @return true if exists, else false
+     */
+    public boolean checkUsernameExists(String username, DataSnapshot snapshot) {
+
+        for(DataSnapshot d : snapshot.getChildren()) {
+            if(d.child(username).exists()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public abstract boolean insert();
+
+    protected void addToDatabase() {
+        DataBase.getInstance();
+        DataBase.insert(this.getUserKey(""), this.convert());
+    }
+
+    private String getUserKey(String key) {
+        return this.className + "/" + this.username + "/" + key;
+    }
 }

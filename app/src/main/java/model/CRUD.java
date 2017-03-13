@@ -1,5 +1,7 @@
 package model;
 
+import com.google.firebase.database.DataSnapshot;
+
 /**
  * Created by Bill Xiong on 3/7/17.
  * interface for objects that are CRUDable
@@ -15,10 +17,11 @@ public interface CRUD {
 
     /**
      * Return object retrieved from database with key
+     * @param snapshot the snapshot corresponding to read
      * @param key the key to use
      * @return the object corresponding to the key
      */
-    Object read(String key);
+    Object read(Class<?> name, DataSnapshot snapshot);
 
     /**
      * Update value at key in database

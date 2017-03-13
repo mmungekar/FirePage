@@ -21,6 +21,7 @@ public class RC extends User {
     }
 
     public boolean insert() {
+        this.addToDatabase();
         return false;
     }
 
