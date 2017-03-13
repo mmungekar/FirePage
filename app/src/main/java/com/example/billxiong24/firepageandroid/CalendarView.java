@@ -1,9 +1,11 @@
-package model.Calendar;
+package com.example.billxiong24.firepageandroid;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.widget.AdapterView.OnItemClickListener;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +52,14 @@ public class CalendarView extends LinearLayout
 	private ImageView btnNext;
 	private TextView txtDate;
 	private GridView grid;
+
+	// seasons' rainbow
+	int[] rainbow = new int[] {
+			R.color.summer,
+			R.color.fall,
+			R.color.winter,
+			R.color.spring
+	};
 
 	// month-season association (northern hemisphere, sorry australia :)
 	int[] monthSeason = new int[] {2, 2, 3, 3, 3, 0, 0, 0, 1, 1, 1, 2};
@@ -113,8 +123,8 @@ public class CalendarView extends LinearLayout
 	}
 
 	public GridView getGrid(){
-        return grid;
-    }
+		return grid;
+	}
 
 	private void assignClickHandlers()
 	{
@@ -140,21 +150,21 @@ public class CalendarView extends LinearLayout
 			}
 		});
 
-        // long-pressing a day
-        grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
-        {
+		// long-pressing a day
+		grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+		{
 
-            @Override
-            public boolean onItemLongClick(AdapterView<?> view, View cell, int position, long id)
-            {
-                // handle long-press
-                if (eventHandler == null)
-                    return false;
+			@Override
+			public boolean onItemLongClick(AdapterView<?> view, View cell, int position, long id)
+			{
+				// handle long-press
+				if (eventHandler == null)
+					return false;
 
-                eventHandler.onDayLongPress((Date)view.getItemAtPosition(position));
-                return true;
-            }
-        });
+				eventHandler.onDayLongPress((Date)view.getItemAtPosition(position));
+				return true;
+			}
+		});
 	}
 
 	/**

@@ -32,7 +32,7 @@ public class CalendarTabFragment extends Fragment {
         HashSet<Date> events = new HashSet<>();
         events.add(new Date());
 
-        CalendarView cv = ((CalendarView)findViewById(R.id.calendar_view));
+        CalendarView cv = (CalendarView) findViewById(R.id.calendar_view);
         cv.updateCalendar(events);
         Button orange = (Button) findViewById(R.id.button7);
         whenClicked(orange);
@@ -63,7 +63,7 @@ public class CalendarTabFragment extends Fragment {
             {
                 // show returned day
                 DateFormat df = SimpleDateFormat.getDateInstance();
-                Toast.makeText(MainActivity.this, df.format(date), Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this, df.format(date), Toast.LENGTH_SHORT).show();
             }
         });
 
