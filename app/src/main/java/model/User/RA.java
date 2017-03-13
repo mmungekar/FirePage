@@ -2,7 +2,7 @@ package model.User;
 
 import com.google.firebase.database.Exclude;
 
-import model.Privilege.Privilege;
+import java.util.Date;
 
 
 /**
@@ -18,9 +18,6 @@ public class RA extends User {
     }
     public RA(String name, String username, String udid, String password, String phone_number) {
         super(name, username, udid, password, phone_number);
-        this.addPrivilege(Privilege.Privileges.SWITCH);
-        this.addPrivilege(Privilege.Privileges.READ_CALENDAR);
-        this.addPrivilege(Privilege.Privileges.PAGE);
     }
 
     /**
@@ -31,5 +28,13 @@ public class RA extends User {
     public boolean insert() {
         this.addToDatabase();
         return false;
+    }
+
+    public void requestSwitch(Date date) {
+
+    }
+
+    public void acceptSwitch(Date date) {
+
     }
 }

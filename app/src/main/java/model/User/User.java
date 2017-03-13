@@ -2,13 +2,11 @@ package model.User;
 
 import com.google.firebase.database.DataSnapshot;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import model.Convertable;
-import model.Converted;
 import model.CRUD;
 import model.Database.DataBase;
 import model.Privilege.Privilege;
@@ -21,7 +19,6 @@ import model.Privilege.Privilege;
 
 public abstract class User implements CRUD, Convertable {
 
-    private Set<Privilege.Privileges> privileges;
     private Set<Dorm> dorms;
     private String className;
 
@@ -38,13 +35,11 @@ public abstract class User implements CRUD, Convertable {
         this.udid = udid;
         this.password = password;
         this.phone_number = phone_number;
-        privileges = new HashSet<>();
         dorms = new HashSet<>();
         this.className = this.getClass().getSimpleName();
     }
     //maps Privilege.Privileges to Privilege obect- pojo must be String to Object
     public User() {
-        privileges = new HashSet<>();
         dorms = new HashSet<>();
         this.name = this.username = this.udid = this.password = this.phone_number = null;
     }
@@ -129,26 +124,9 @@ public abstract class User implements CRUD, Convertable {
         return false;
     }
 
-    public Set<Privilege.Privileges> getPrivileges() {
-        return Collections.unmodifiableSet(this.privileges);
-    }
     public Set<Dorm> getDorms() {
         return Collections.unmodifiableSet(this.dorms);
     }
-
-
-
-    /**
-     *  Allow to dynamically add privileges based on information given
-     */
-    public boolean addPrivilege(Privilege.Privileges a) {
-        return this.privileges.add(a);
-    }
-
-    public boolean removePrivilege(Privilege.Privileges a) {
-        return this.privileges.remove(a);
-    }
-
 
     public boolean addToDormSet(Dorm dorm) {
         return this.dorms.add(dorm);
@@ -213,12 +191,7 @@ public abstract class User implements CRUD, Convertable {
         userx.setUdid(this.udid);
         userx.setUsername(this.username);
 
-        Set<Privilege.Privileges> priv = this.privileges;
         Set<Dorm> dorms = this.dorms;
-
-        for(Privilege.Privileges p : priv) {
-            userx.getPrivileges().add(p.toString());
-        }
 
         for(Dorm d : dorms) {
             userx.getDorms().add(d.toString());

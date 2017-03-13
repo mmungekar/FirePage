@@ -31,12 +31,6 @@ public interface UserInfo extends Converted {
     String getName();
 
     /**
-     * getter for privileges, if any
-     * @return String List of privileges
-     */
-    List<String> getPrivileges();
-
-    /**
      * getter for username
      * @return username
      */

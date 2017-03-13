@@ -33,7 +33,7 @@ import model.User.User;
 public class DormObj implements CRUD, Convertable {
 
 
-    private static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    public static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     private Dorm name;
     private Set<PublicNotification> notifications;
@@ -110,12 +110,12 @@ public class DormObj implements CRUD, Convertable {
     }
 
     public DormObj read(Class<?> name, DataSnapshot snapshot) {
-        DormX dormx = (DormX) DataBase.read(DormX.class, snapshot.child("Dorms").child(this.name.toString()));
+        DormX dormx = (DormX) DataBase.read(DormX.class, snapshot);
         return dormx.convertBack(name, snapshot);
     }
 
     public DormObj read(Class<?> name, DataSnapshot snapshot, String key) {
-        DormX dormx = (DormX) DataBase.read(DormX.class, snapshot.child("Dorms").child(key));
+        DormX dormx = (DormX) DataBase.read(DormX.class, snapshot.child(key));
         return dormx.convertBack(name, snapshot);
     }
 

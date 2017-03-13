@@ -77,10 +77,10 @@ public class DormX implements Converted {
         try {
             ret = (DormObj) className.getConstructor().newInstance();
             ret.setName(Dorm.valueOf(this.name));
-            User ra = new RA();
             for(String str : this.dates.keySet()) {
 
-                ra = ra.read(RA.class, snapshot.child("RA"), (String) this.dates.get(str));
+                User ra = new RA();
+                ra.setUsername((String) this.dates.get(str));
                 ret.addCalendarDate(ret.formatDate(str), ra);
             }
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {

@@ -29,7 +29,6 @@ import model.User.UserX;
  */
 
 public class ContactActivity extends AppCompatActivity {
-    private List<User> users = new ArrayList<>();
     private DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
     private DatabaseReference childRef = mRootRef.child("RA");
     private DatabaseReference dormRef = mRootRef.child("Dorms");
@@ -43,20 +42,25 @@ public class ContactActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        mRootRef.addValueEventListener(new ValueEventListener() {
+
+        dormRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                DormObj obj = new DormObj(Dorm.RANDOLPH);
-                obj = obj.read(DormObj.class, dataSnapshot);
-                System.out.println(obj.getName() + "NAME");
-                System.out.println(obj.getCalendarDates());
+                System.out.println("HELLO WORLD PLEASE WORK");
+                for(DataSnapshot data : dataSnapshot.getChildren()) {
 
-                for(Date d : obj.getCalendarDates().keySet()) {
-                    System.out.println(d);
-                    System.out.println(obj.getCalendarDates().get(d).getDorms());
-                    System.out.println(obj.getCalendarDates().get(d).getPhone_number());
+                    DormObj obj = new DormObj();
+                    obj = obj.read(DormObj.class, data);
+                    System.out.println(obj.getName() + "NAME");
+                    System.out.println(obj.getCalendarDates());
+
+                    for(Date d : obj.getCalendarDates().keySet()) {
+                        System.out.println(d);
+                        System.out.println(obj.getCalendarDates().get(d).getDorms());
+                        System.out.println(obj.getCalendarDates().get(d).getPhone_number());
+                    }
+
                 }
-
 
 
             }
@@ -70,6 +74,7 @@ public class ContactActivity extends AppCompatActivity {
         childRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                System.out.println("CHILD REFHELLO WORLD PLEASE WORK");
                 System.out.println(dataSnapshot.child("billxion").exists() + "CHECk user name exists");
                 User used = new RA();
                 used = used.read(RA.class, dataSnapshot, "billxion");
@@ -108,7 +113,6 @@ public class ContactActivity extends AppCompatActivity {
                 user.addToDormSet(Dorm.BASSET);
                 user.insert();
                 User res = new Resident("ritwik head", "ritler", "5436435", "pass", "8475687");
-                System.out.println(res.getClass().getSimpleName());
                 res.addToDormSet(Dorm.RANDOLPH);
                 res.insert();
 
@@ -123,7 +127,7 @@ public class ContactActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //childRef.child("billxion").child("dorms").child("3").setValue(Dorm.GILES.toString());
                 DormObj dorm = new DormObj(Dorm.RANDOLPH);
-                User user = new RA("bil", "billxion","1234", "password","67676767");
+                User user = new RA("bil", "billxiong","1234", "password","67676767");
                 user.addToDormSet(Dorm.BROWN);
                 user.addToDormSet(Dorm.BELLTOWER);
                 user.addToDormSet(Dorm.BASSET);

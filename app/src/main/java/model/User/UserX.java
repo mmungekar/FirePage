@@ -6,8 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import model.Converted;
-import model.Convertable;
-import model.Privilege.Privilege;
 
 /**
  * Created by Bill Xiong on 3/6/17.
@@ -17,7 +15,7 @@ import model.Privilege.Privilege;
 public class UserX implements Converted, UserInfo {
 
 
-    private List<String> privileges, dorms;
+    private List<String> dorms;
     private String name;
 
 
@@ -27,13 +25,9 @@ public class UserX implements Converted, UserInfo {
     private String phone_number;
 
     public UserX() {
-        this.privileges = new ArrayList<>();
         this.dorms = new ArrayList<>();
     }
 
-    public List<String> getPrivileges() {
-        return privileges;
-    }
 
     public List<String> getDorms() {
         return dorms;
@@ -88,11 +82,6 @@ public class UserX implements Converted, UserInfo {
             for(String d : dorms) {
                 //TODO error handling
                 user.addToDormSet(Dorm.valueOf(d));
-            }
-
-            for(String p : privileges) {
-                //TODO error handling for valueOf
-                user.addPrivilege(Privilege.Privileges.valueOf(p));
             }
 
         } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
