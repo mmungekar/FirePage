@@ -4,15 +4,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.Exclude;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import model.Convertable;
 import model.Converted;
-import model.Notification.NotificationX;
 import model.User.Dorm;
 import model.User.RA;
 import model.User.User;
@@ -26,6 +21,7 @@ public class DormX implements Converted {
 
 
     private String name;
+    private String phone_number;
 //    private List<NotificationX> notifications;
 //    private List<NotificationX> pages;
     private Map<String, Object> dates;
@@ -47,6 +43,13 @@ public class DormX implements Converted {
 //    public List<NotificationX> getPages() {
 //        return pages;
 //    }
+    public String getPhone_number() {
+        return this.phone_number;
+    }
+
+    public void setPhone_number(String num) {
+        this.phone_number = num;
+    }
 
     public Map<String, Object> getDates() {
         return dates;
@@ -77,6 +80,7 @@ public class DormX implements Converted {
         try {
             ret = (DormObj) className.getConstructor().newInstance();
             ret.setName(Dorm.valueOf(this.name));
+            ret.setPhone_number(this.phone_number);
             for(String str : this.dates.keySet()) {
 
                 User ra = new RA();

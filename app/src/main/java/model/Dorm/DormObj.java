@@ -36,6 +36,7 @@ public class DormObj implements CRUD, Convertable {
     public static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
     private Dorm name;
+    private String phone_number;
     private Set<PublicNotification> notifications;
     private Set<Page> pages;
     private RACalendar calendar;
@@ -72,6 +73,15 @@ public class DormObj implements CRUD, Convertable {
 
         return temp;
     }
+
+    public String getPhone_number() {
+        return this.phone_number;
+    }
+
+    public void setPhone_number(String num) {
+        this.phone_number = num;
+    }
+
     public Dorm getName() {
         return this.name;
     }
@@ -127,7 +137,7 @@ public class DormObj implements CRUD, Convertable {
         DataBase.getInstance();
         DormX dormx = new DormX();
         dormx.setName(this.name.toString());
-
+        dormx.setPhone_number(this.phone_number);
         dormx.setDates(this.convertMap());
         //dormx.setNotifications(this.convertNotifs());
         //dormx.setPages(this.convertPages());
