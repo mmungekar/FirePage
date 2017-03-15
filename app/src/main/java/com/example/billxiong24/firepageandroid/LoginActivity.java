@@ -108,6 +108,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 String check = email +":" + password;
                 if(test.contains(check)) {
                     System.out.println("works");
+                    Intent myIntent = new Intent(LoginActivity.this, TabbedActivity.class);
+                    LoginActivity.this.startActivity(myIntent);
+
                 }
                 else {
                     System.out.println("fails");

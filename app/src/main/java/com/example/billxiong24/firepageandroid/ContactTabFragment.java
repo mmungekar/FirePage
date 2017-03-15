@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 import com.google.firebase.database.DataSnapshot;
@@ -61,7 +62,12 @@ public class ContactTabFragment extends Fragment {
 
         rootView = inflater.inflate(R.layout.tab_contact, container, false);
         spinner = (Spinner) rootView.findViewById(R.id.spinner);
-
+        Button callButton = (Button) rootView.findViewById(R.id.button);
+        callButton.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                System.out.println("Study the test pupper");
+            }
+        });
 
         return rootView;
     }

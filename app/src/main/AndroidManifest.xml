@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".TabbedActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,7 +33,7 @@
         <!-- android:name=".LoginActivity" -->
         <!-- android:label="@string/title_activity_login"></activity> -->
         <activity
-            android:name=".TabbedActivity"
+            android:name=".LoginActivity"
             android:label="@string/title_activity_tabbed"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
