@@ -24,9 +24,9 @@ public class ResolveTabFragment extends Fragment {
     ArrayAdapter<String> adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.tab_resolve, container, false);
+        final View rootView = inflater.inflate(R.layout.tab_resolve, container, false);
         ListView myListView = (ListView)rootView.findViewById(R.id.myListView);
         myList=new ArrayList<String>();
         myList.add("Hi wassup");
@@ -46,7 +46,7 @@ public class ResolveTabFragment extends Fragment {
                 myWindow.update(50, 50, 320, 90);
                 myWindow.setContentView( inflater.inflate(R.layout.tab_resolve_details, container, false));
                 Button enterButton = (Button) rootView.findViewById(R.id.enterButton);
-                EditText resolveField = (EditText) rootView.findViewById(R.id.editText2);
+                final EditText resolveField = (EditText) rootView.findViewById(R.id.editText2);
                 enterButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

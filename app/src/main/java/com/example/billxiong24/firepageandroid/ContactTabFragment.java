@@ -40,6 +40,7 @@ public class ContactTabFragment extends Fragment {
         dormRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                list.clear();
                 System.out.println("hello wolrdd");
                 for(DataSnapshot d : dataSnapshot.getChildren()) {
                     DormObj obj = new DormObj();

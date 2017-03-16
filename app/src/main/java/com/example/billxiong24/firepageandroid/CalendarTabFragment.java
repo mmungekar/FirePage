@@ -29,7 +29,9 @@ import Utilities.Colors;
 import controller.RAController;
 import customcalendar.CalendarAdapter;
 import customcalendar.CalendarCollection;
+import model.Calendar.Calendar;
 import model.Dorm.DormObj;
+import model.User.GR;
 import model.User.User;
 import model.User.RA;
 
@@ -179,20 +181,21 @@ public class CalendarTabFragment extends Fragment {
                             setNextMonth();
                             refreshCalendar();
                         }
-                        DormObj dorm = raController.getDormObj().read(DormObj.class, dormSnap, raController.getDormObj().getName().toString());
-                        System.out.println("I am calend" + cal_adapter.getCount());
-                        System.out.println("I am calend" + cal_adapter.pmonth.getGregorianChange());
-                        System.out.println("I am calend" + cal_month.get(GregorianCalendar.MONTH));
 
-//                        int i = 0;
-//                        for(Date d : dorm.getCalendarDates().keySet()) {
-//                            System.out.println("Keys" + DormObj.formatter.format(d) + " " + dorm.getCalendarDates().get(d).getUsername());
-//                            gridview.getChildAt(i++).setBackgroundColor(Color.GREEN);
-//
-//                        }
+                        //TODO FIX THIS TUMOR CANCER
+                        DormObj dorm = raController.getDormObj().read(DormObj.class, dormSnap, raController.getDormObj().getName().toString());
+                        for(int i = 0; i < cal_adapter.getCount(); ++i) {
+                            Date key = dorm.formatDate((String) cal_adapter.getItem(i));
+                            if(dorm.getCalendarDates().containsKey(key)) {
+                                if(RAColors.containsKey(dorm.getCalendarDates().get(key).getUsername())) {
+                                    gridview.getChildAt(i).setBackgroundColor(RAColors.get(dorm.getCalendarDates().get(key).getUsername()));
+                                }
+                            }
+                        }
 
                         ((CalendarAdapter) parent.getAdapter()).setSelected(v,position);
-                        if(RA != null) {
+                        //TODO temporary fix- need to determine permissions
+                        if(RA != null && !(raController.getRA() instanceof RA)) {
                             v.setBackgroundColor(RAColors.get(RA));
                             raController.getDormObj().insertNewDate(selectedGridDate, new RA().setUsername(RA));
                         }
