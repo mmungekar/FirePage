@@ -13,44 +13,44 @@ import android.widget.EditText;
  */
 
 public class SettingsTabFragment extends Fragment {
-
+    View rootView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.tab_settings, container, false);
-    Button nameButton =  (Button)findViewById(R.id.nameButton);
+        rootView = inflater.inflate(R.layout.tab_settings, container, false);
+    Button nameButton =  (Button)rootView.findViewById(R.id.nameButton);
         nameButton.setOnClickListener(new View.OnClickListener() {
                                                   @Override
                                                   public void onClick(View view) {
-                                                rootView.setContentView(R.layout.tab_settings_name);
+                                                      rootView = inflater.inflate(R.layout.tab_settings_name, container, false);
                                                       addFields();
                                                   }
                                               });
-        Button numberButton =  (Button) findViewById(R.id.numberButton);
+        Button numberButton =  (Button) rootView.findViewById(R.id.numberButton);
         numberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rootView.setContentView(R.layout.tab_settings_number);
+                rootView = inflater.inflate(R.layout.tab_settings_number, container, false);
                 addFields();
             }
         });
-        Button passwordButton =  (Button) findViewById(R.id.passwordButton);
+        Button passwordButton =  (Button) rootView.findViewById(R.id.passwordButton);
         passwordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                rootView.setContentView(R.layout.tab_settings_password);
+                rootView = inflater.inflate(R.layout.tab_password, container, false);
                 addFields();
             }
         });
-        Button logoutButton =  (Button) findViewById(R.id.logoutButton);
+        Button logoutButton =  (Button) rootView.findViewById(R.id.logoutButton);
 
         return rootView;
     }
 
     private void addFields(){
-        EditText t1 = (EditText)findViewById(R.id.editText4);
-        EditText t2 = (EditText)findViewById(R.id.editText5);
-        Button enterButton =(Button)findViewById(R.id.button4);
+        EditText t1 = (EditText)rootView.findViewById(R.id.editText4);
+        EditText t2 = (EditText)rootView.findViewById(R.id.editText5);
+        Button enterButton =(Button)rootView.findViewById(R.id.button4);
         enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
