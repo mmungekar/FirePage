@@ -10,6 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import controller.RAController;
+import controller.UserController;
+import model.User.RA;
+import model.User.User;
+
 public class TabbedActivity extends AppCompatActivity {
 
     /**
@@ -30,6 +35,11 @@ public class TabbedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //hard coded for now
+
+
+
+
         setContentView(R.layout.activity_tabbed);
 
 //        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -95,20 +105,15 @@ public class TabbedActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    ContactTabFragment tab1 = new ContactTabFragment();
-                    return tab1;
+                    return new ContactTabFragment();
                 case 1:
-                    CalendarTabFragment tab2 = new CalendarTabFragment();
-                    return tab2;
+                    return new CalendarTabFragment();
                 case 2:
-                    ResolveTabFragment tab3 = new ResolveTabFragment();
-                    return tab3;
+                    return new ResolveTabFragment();
                 case 3:
-                    NotificationsTabFragment tab4 = new NotificationsTabFragment();
-                    return tab4;
+                    return new NotificationsTabFragment();
                 case 4:
-                    SettingsTabFragment tab5 = new SettingsTabFragment();
-                    return tab5;
+                    return new SettingsTabFragment();
                 default:
                     return null;
             }

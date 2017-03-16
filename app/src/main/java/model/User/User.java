@@ -1,6 +1,7 @@
 package model.User;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -42,12 +43,18 @@ public abstract class User implements CRUD, Convertable {
     public User() {
         dorms = new HashSet<>();
         this.name = this.username = this.udid = this.password = this.phone_number = null;
+        this.className = this.getClass().getSimpleName();
     }
 
     /* users can call the pager with this method. Will call number and record call */
     public void call() {
         //TODO something with PHONE_NUMBER and stuff
     }
+
+    public void addSingleEvent(String reference, ValueEventListener e) {
+        DataBase.getRoot().getReference(reference).addListenerForSingleValueEvent(e);
+    }
+
 
     public String getName() {
         return this.name;

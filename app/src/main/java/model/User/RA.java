@@ -30,6 +30,19 @@ public class RA extends User {
         return false;
     }
 
+    public boolean addToDormSet(Dorm dorm) {
+        return (this.getDorms().size() < 1) && super.addToDormSet(dorm);
+    }
+
+    public Dorm getDorm() {
+        Dorm f = null;
+        for(Dorm d : this.getDorms()) {
+            f = d;
+            break;
+        }
+        return f;
+    }
+
     public void requestSwitch(Date date) {
 
     }

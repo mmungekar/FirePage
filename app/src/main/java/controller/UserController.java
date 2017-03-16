@@ -1,8 +1,12 @@
 package controller;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import model.Dorm.DormObj;
 import model.User.Dorm;
@@ -23,4 +27,6 @@ public abstract class UserController {
         Date today = obj.formatDate(DormObj.formatter.format(new Date()));
         return obj.getCalendarDates().get(today);
     }
+
 }
+

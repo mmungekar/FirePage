@@ -2,6 +2,7 @@ package model.Database;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Map;
@@ -15,6 +16,11 @@ import model.Converted;
 
 public class DataBase {
     private static final FirebaseDatabase root = FirebaseDatabase.getInstance();
+    public static final DatabaseReference dormRef = FirebaseDatabase.getInstance().getReference("Dorms");
+    public static final DatabaseReference raRef = FirebaseDatabase.getInstance().getReference("RA");
+    public static final DatabaseReference resRef= FirebaseDatabase.getInstance().getReference("Resident");
+    public static final DatabaseReference rcRef = FirebaseDatabase.getInstance().getReference("RC");
+    public static final DatabaseReference grRef = FirebaseDatabase.getInstance().getReference("GR");
     private static DataBase database = null;
 
     private DataBase() {}
@@ -33,6 +39,10 @@ public class DataBase {
 
     public static Task insert(String key, Converted convertedObject) {
         return DataBase.root.getReference(key).setValue(convertedObject);
+    }
+
+    public static Task insert(String key, Object obj) {
+        return DataBase.root.getReference(key).setValue(obj);
     }
 
     public static Task updateValue(String key, Object obj) {

@@ -1,6 +1,9 @@
 package model.Dorm;
 
+import android.renderscript.Sampler;
+
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,6 +77,11 @@ public class DormObj implements CRUD, Convertable {
         return temp;
     }
 
+    public void addSingleEvent(String ref, ValueEventListener e) {
+        DataBase.getRoot().getReference(ref).addListenerForSingleValueEvent(e);
+    }
+
+
     public String getPhone_number() {
         return this.phone_number;
     }
@@ -127,6 +135,13 @@ public class DormObj implements CRUD, Convertable {
     public DormObj read(Class<?> name, DataSnapshot snapshot, String key) {
         DormX dormx = (DormX) DataBase.read(DormX.class, snapshot.child(key));
         return dormx.convertBack(name, snapshot);
+    }
+
+    public void insertNewDate(String date, User user) {
+        //check if string is valid date
+        formatDate(date);
+        //DataBase.insert("Dorms/" +this.name + "/dates/"+date, user.getUsername());
+        DataBase.insert(this.getUserKey("dates") + "/" + date, user.getUsername());
     }
 
     public boolean delete(String key) {

@@ -107,17 +107,13 @@ public class ContactActivity extends AppCompatActivity {
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                User user = new RA("bil", "billxion","1234", "password","67676767");
-                user.addToDormSet(Dorm.BROWN);
-                user.addToDormSet(Dorm.BELLTOWER);
-                user.addToDormSet(Dorm.BASSET);
+                User user = new RA("bil", "billxiong"+(int)(Math.random() * 20),"1234", "password","67676767");
+                user.addToDormSet(Dorm.RANDOLPH);
                 user.insert();
                 User res = new Resident("ritwik head", "ritler", "5436435", "pass", "8475687");
                 res.addToDormSet(Dorm.RANDOLPH);
                 res.insert();
 
-                user.update("phone_number", "6666666");
-                user.update("password", "hellopass");
                 //DatabaseReference d = childRef.push();
             }
         });
@@ -127,7 +123,7 @@ public class ContactActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //childRef.child("billxion").child("dorms").child("3").setValue(Dorm.GILES.toString());
                 DormObj dorm = new DormObj(Dorm.RANDOLPH);
-                User user = new RA("bil", "billxiong","1234", "password","67676767");
+                User user = new RA("bil", "billxiong"+(int)(Math.random() * 20),"1234", "password","67676767");
                 user.addToDormSet(Dorm.BROWN);
                 user.addToDormSet(Dorm.BELLTOWER);
                 user.addToDormSet(Dorm.BASSET);
