@@ -9,16 +9,57 @@
     tools:context="com.example.billxiong24.firepageandroid.TabbedActivity$PlaceholderFragment">
 
     <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:text="This tab will allow a user to change their account information"
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4"
-        android:layout_below="@+id/section_label"
-        android:layout_toEndOf="@+id/section_label" />
+        android:layout_alignParentTop="true"
+        android:text="Account Settings"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/nameButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:text="Change Name"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/numberButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Change Phone Number"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/passwordButton"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:layout_marginTop="37dp"
+        android:layout_below="@+id/numberButton"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/passwordButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Change Password"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:layout_below="@+id/nameButton"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
