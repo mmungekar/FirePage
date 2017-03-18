@@ -159,7 +159,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             public void onClick(View view) {
                 User user = new RA("bil", "billx","1234", "password","67676767");
                 user.addToDormSet(Dorm.BROWN);
-                user.addToDormSet(Dorm.BELLTOWER);
                 UserX x = (UserX) user.convert();
                 DatabaseReference ref = childRef.child(x.getUsername());
                 //DatabaseReference d = childRef.push();

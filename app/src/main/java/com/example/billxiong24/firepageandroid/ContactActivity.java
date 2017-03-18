@@ -122,13 +122,18 @@ public class ContactActivity extends AppCompatActivity {
         b2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 //childRef.child("billxion").child("dorms").child("3").setValue(Dorm.GILES.toString());
-                DormObj dorm = new DormObj(Dorm.RANDOLPH);
-                User user = new RA("bil", "billxiong"+(int)(Math.random() * 20),"1234", "password","67676767");
-                user.addToDormSet(Dorm.BROWN);
-                user.addToDormSet(Dorm.BELLTOWER);
-                user.addToDormSet(Dorm.BASSET);
-                dorm.addCalendarDate(new Date(), user);
-                dorm.insert();
+//                DormObj dorm = new DormObj(Dorm.RANDOLPH);
+//                User user = new RA("bil", "billxiong"+(int)(Math.random() * 20),"1234", "password","67676767");
+//                user.addToDormSet(Dorm.BROWN);
+//                user.addToDormSet(Dorm.BELL_TOWER);
+//                user.addToDormSet(Dorm.BASSET);
+//                dorm.addCalendarDate(new Date(), user);
+//                dorm.insert();
+
+                for(Dorm d : Dorm.values()) {
+                    DormObj dorm = new DormObj(d);
+                    dorm.insert();
+                }
 
                 //dormRef.child(Dorm.RANDOLPH.toString()).child("dates").child("2017-03-12").setValue("reeee");
 

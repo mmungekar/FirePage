@@ -30,20 +30,20 @@ public class CalendarAdapter extends BaseAdapter {
     private Context context;
 
     private java.util.Calendar month;
-    public GregorianCalendar pmonth;
+    private GregorianCalendar pmonth;
     /**
      * calendar instance for previous month for getting complete view
      */
-    public GregorianCalendar pmonthmaxset;
+    private GregorianCalendar pmonthmaxset;
     private GregorianCalendar selectedDate;
-    int firstDay;
-    int maxWeeknumber;
-    int maxP;
-    int calMaxP;
-    int lastWeekDay;
-    int leftDays;
-    int mnthlength;
-    String itemvalue, curentDateString;
+    private int firstDay;
+    private int maxWeeknumber;
+    private int maxP;
+    private int calMaxP;
+    private int lastWeekDay;
+    private int leftDays;
+    private int mnthlength;
+    private String itemvalue, curentDateString;
     DateFormat df;
 
     private ArrayList<String> items;
@@ -53,14 +53,14 @@ public class CalendarAdapter extends BaseAdapter {
 
     public CalendarAdapter(Context context, GregorianCalendar monthCalendar,ArrayList<CalendarCollection> date_collection_arr) {
         this.date_collection_arr=date_collection_arr;
-        CalendarAdapter.day_string = new ArrayList<String>();
+        CalendarAdapter.day_string = new ArrayList<>();
         Locale.setDefault(Locale.US);
         month = monthCalendar;
         selectedDate = (GregorianCalendar) monthCalendar.clone();
         this.context = context;
         month.set(GregorianCalendar.DAY_OF_MONTH, 1);
 
-        this.items = new ArrayList<String>();
+        this.items = new ArrayList<>();
         df = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
         curentDateString = df.format(selectedDate.getTime());
         refreshDays();
@@ -274,10 +274,8 @@ public class CalendarAdapter extends BaseAdapter {
                             }
                         }).show();
                 break;
-            }else{
-
-
-            }}
+            }
+        }
 
 
 

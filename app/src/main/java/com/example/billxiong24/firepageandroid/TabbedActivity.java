@@ -113,7 +113,7 @@ public class TabbedActivity extends AppCompatActivity {
                 case 3:
                     return new NotificationsTabFragment();
                 case 4:
-                    return new SettingsTabFragment();
+                    //return new SettingsTabFragment();
                 default:
                     return null;
             }

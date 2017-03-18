@@ -1,18 +1,16 @@
 package controller;
 
+import android.view.View;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView;
+
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import model.Dorm.DormObj;
+import customcalendar.CalendarAdapter;
 import model.User.Dorm;
 import model.User.RA;
-import model.User.User;
+import view.CalendarView;
 
 /**
  * Created by Bill Xiong on 3/15/17.
@@ -22,96 +20,76 @@ import model.User.User;
 
 public class RAController extends UserController {
 
-    private RA ra;
-    private DormObj dormObj;
-    private Set<RA> set = new HashSet<>();
-    public RAController(String username) {
-        this.ra = (RA) new RA().setUsername(username);
-        this.dormObj = new DormObj();
-        //this.getRAData(username);
+    public RAController(String username, CalendarView cv) {
+        super(cv);
+        this.setUser(new RA().setUsername(username));
     }
 
-    //TODO remove these getters im too lazy right now
-    public RA getRA() {
-        return this.ra;
+    public Dorm getDorm() {
+        RA user = (RA) this.getUser();
+        return user.getDorm();
     }
 
-    public DormObj getDormObj() {
-        return this.dormObj;
+    public void addSingleEventListener(String ref, ValueEventListener e) {
+        this.getUser().addSingleEvent(ref, e);
     }
 
-    /**
-     * gets all ra objects that are in this.ra's dorm
-     * @return a set of RA's in this.ra's dorm
-     */
-    public Set<RA> getRAsInDorm() {
-        final Set<RA> set = new HashSet<>();
-        final Dorm dorm = this.ra.getDorm();
-        User ra = new RA();
-
-        //TODO fix this garbage, should not be in controller
-        ra.addSingleEvent("RA", new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot d : dataSnapshot.getChildren()) {
-                    RA used = new RA();
-                    used = (RA) used.read(RA.class, d);
-                    if(used.getDorms().contains(dorm)) {
-                        set.add(used);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-        return set;
-    }
-
-    public RA getRAData(String username) {
-        this.ra.addSingleEvent("RA", new CustomValueEventListener());
-        return this.ra;
-    }
-
+    //TODO this should be in authentication?
     public void setRAInfo(DataSnapshot dataSnapshot) {
-        this.ra = (RA) this.ra.read(RA.class, dataSnapshot, this.ra.getUsername());
+        this.setUser(this.getUser().read(RA.class, dataSnapshot, this.getUser().getUsername()));
+        this.getDormController().setDormName(this.getDorm());
     }
 
-    public List<String> getRAInDorm(DataSnapshot dataSnapshot) {
-        List<String> usernames = new ArrayList<>();
+    public void initRAs(DataSnapshot dataSnapshot) {
         for(DataSnapshot data : dataSnapshot.getChildren()) {
-            RA c = (RA) this.ra.read(RA.class, data);
-            if(c.getDorm().equals(this.ra.getDorm())) {
-                usernames.add(c.getUsername());
+            RA c = (RA) this.getUser().read(RA.class, data);
+            RA user = (RA) this.getUser();
+            if(c.getDorm().equals(user.getDorm())) {
+                this.getCalendarView().putRAColor(c.getUsername());
             }
         }
-        return usernames;
+        this.getCalendarView().initRAAdapter();
     }
 
-    public Set<RA> getSet() {
-        return this.set;
+    public void addGridHandler(DataSnapshot dormSnap) {
+        this.getCalendarView().getGridview().setOnItemClickListener(new Listener(dormSnap));
     }
 
-    private void setRA(RA ra) {
-        this.ra = ra;
-    }
+    private class Listener implements OnItemClickListener {
+        private DataSnapshot dormSnap;
 
-    private class CustomValueEventListener implements com.google.firebase.database.ValueEventListener{
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            RA temp = (RA) new RA().read(RA.class, dataSnapshot, getRA().getUsername());
-            System.out.println("PRINTING temp INFO -----" + temp.getName());
-            System.out.println(temp.getUsername());
-            System.out.println(temp.getDorms());
-            System.out.println(temp.getPassword());
-            ra = temp;
-
+        private Listener(DataSnapshot dormSnap) {
+            this.dormSnap = dormSnap;
         }
 
-        public void onCancelled(DatabaseError databaseError) {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+            ((CalendarAdapter) parent.getAdapter()).setSelected(v, position);
+            String selectedGridDate = CalendarAdapter.day_string
+                    .get(position);
 
+            String[] separatedTime = selectedGridDate.split("-");
+            String gridvalueString = separatedTime[2].replaceFirst("^0*", "");
+            int gridvalue = Integer.parseInt(gridvalueString);
+
+            //wot
+            if ((gridvalue > 10) && (position < 8)) {
+                getCalendarView().setPreviousMonth();
+            }
+            else if ((gridvalue < 7) && (position > 28)) {
+                getCalendarView().setNextMonth();
+            }
+
+            //TODO MOVE metjod OUTSIDE- for some reason the gridview has null views before event handler triggers
+            populateCalendar(this.dormSnap);
+
+            ((CalendarAdapter) parent.getAdapter()).setSelected(v, position);
+            //this should be in GR, RC controllers, not RA controllers, since RAs cant modify calendar
+//                if (RA != null) {
+//                    v.setBackgroundColor(RAColors.get(RA));
+//                    dormController.insertCallDate(selectedGridDate, new RA().setUsername(RA));
+//                }
         }
-
     }
+
 }
