@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.view.Gravity;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.Toast;
 
 /**
  * Created by Ritler on 3/8/17.
@@ -41,19 +43,21 @@ public class ResolveTabFragment extends Fragment {
                 /**
                  * TEST and figure out if syntax works
                  */
-                myWindow = new PopupWindow(rootView);
-                myWindow.showAtLocation(rootView, Gravity.BOTTOM, 10, 10);
-                myWindow.update(50, 50, 320, 90);
-                myWindow.setContentView( inflater.inflate(R.layout.tab_resolve_details, container, false));
-                Button enterButton = (Button) rootView.findViewById(R.id.enterButton);
-                final EditText resolveField = (EditText) rootView.findViewById(R.id.editText2);
+                final View popupView = inflater.inflate(R.layout.tab_resolve_details,null);
+                myWindow = new PopupWindow(popupView,LayoutParams.WRAP_CONTENT,
+                        LayoutParams.WRAP_CONTENT);
+                myWindow.setFocusable(true);
+               myWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+                Button enterButton = (Button) popupView.findViewById(R.id.enterButton);
                 enterButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(resolveField.getText().toString()==null||resolveField.getText().toString().equals("Enter")){
-                            resolveField.setText("Please Enter a Resolution");
+                        EditText resolveField = (EditText) popupView.findViewById(R.id.editText2);
+                       if(resolveField.getText().length()==0){
+                            resolveField.setHint("Please Enter a Resolution");
                         }
                         else{
+                           //Add more code here
                             myWindow.dismiss();
                         }
                     }
